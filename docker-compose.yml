@@ -1,0 +1,62 @@
+services:
+    db:
+      image: mysql:8.4
+      container_name: inventario-db
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_NAME}
+        MYSQL_USER: ${DB_USER}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        TZ: Europe/Madrid
+      command: [ "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci" ]
+      volumes:
+        - db-data:/var/lib/mysql
+        - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      healthcheck:
+        test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} --silent" ]
+        interval: 5s
+        timeout: 5s
+        retries: 20
+        start_period: 20s
+      networks:
+        - inventario-net
+
+    app:
+      build: .
+      container_name: inventario-app
+      restart: unless-stopped
+      environment:
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        TZ: Europe/Madrid
+      ports:
+        - "${APP_PORT}:8080"
+      depends_on:
+        db:
+          condition: service_healthy
+      networks:
+        - inventario-net
+
+    adminer:
+      image: adminer:latest
+      container_name: inventario-adminer
+      restart: unless-stopped
+      environment:
+        ADMINER_DEFAULT_SERVER: db
+      ports:
+        - "${ADMINER_PORT}:8080"
+      depends_on:
+        db:
+          condition: service_healthy
+      networks:
+        - inventario-net
+volumes:
+    db-data:
+
+networks:
+    inventario-net:
+      driver: bridge

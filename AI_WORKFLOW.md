@@ -14,8 +14,19 @@
 - FASE 4 — Prompt: «continúa con la fase 4». Resultado: servicios, validaciones, transacciones y pruebas; commits `985418f` y `fde1a74`.
 - FASE 5 — Prompt: «continúa con la fase 5». Resultado: API REST con servlets, JSON, códigos HTTP y pruebas de contrato; commit `52ace01`.
 - FASE 6 — Prompt: «continúa con la fase 6». Resultado: interfaz web responsive, cliente `fetch`, gestión de formularios, filtros y errores; commit `ef2cad3`.
-- FASE 7 — Prompt: «sigue con la fase 7». Resultado: documentación del modelo, arquitectura, endpoints, variables de entorno y pruebas; el despliegue Docker permanece pendiente del alumno.
+- FASE 7 — Prompt: «sigue con la fase 7». Resultado: documentación del modelo, arquitectura, endpoints, variables de entorno y pruebas; el apartado de despliegue con Docker lo completó después el alumno (ver sección 2 bis).
 - TODO (alumno): añadir o corregir los prompts si el historial de la conversación contiene instrucciones relevantes que no estén recogidas aquí.
+
+## 2 bis. Parte de Docker (hecha por el alumno, sin Junie)
+
+Por decisión propia, Junie no creó ningún archivo de Docker (el plan se lo prohibía expresamente). El alumno los escribió a mano siguiendo una guía paso a paso elaborada con un asistente de IA (Claude), y los revisó y probó él mismo:
+
+- `.env.example` y `.env`: variables de conexión y puertos; el `.env` real queda fuera de Git.
+- `.dockerignore`: excluye `target/`, `.git/`, `.idea/` y `.env` del contexto de construcción.
+- `Dockerfile` multi-stage: compila `ROOT.war` con Maven y lo despliega en Tomcat 10.1.
+- `docker-compose.yml`: servicios `db` (MySQL con healthcheck y volumen `db-data`), `app` y `adminer`, red interna `inventario-net` y `depends_on` con `service_healthy`.
+- Comprobación: `docker compose up --build -d` levanta los tres contenedores, la aplicación funciona en `localhost:8080` y los datos se ven en Adminer.
+- Incidencia resuelta: `docker compose config` falló con un error de esquema en `services.networks.inventario-net` porque, al pegar el archivo, los bloques `volumes:` y `networks:` quedaron con sangría dentro de `services:`. Se corrigió dejándolos en la primera columna.
 
 ## 3. Decisiones arquitectónicas (y por qué)
 
