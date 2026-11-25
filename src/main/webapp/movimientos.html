@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f7f4">
+    <title>Movimientos | Inventario de restaurante</title><link rel="stylesheet" href="css/styles.css"><script type="module" src="js/movimientos.js"></script>
+</head>
+<body>
+<header class="site-header"><a class="brand" href="index.html">Mesa<span>Stock</span></a><nav aria-label="Navegación principal"><a href="index.html">Panel</a><a href="productos.html">Productos</a><a href="categorias.html">Categorías</a><a href="proveedores.html">Proveedores</a><a href="movimientos.html" aria-current="page">Movimientos</a></nav></header>
+<main class="page-shell">
+    <section class="page-heading"><div><p class="eyebrow">TRAZABILIDAD</p><h1>Movimientos de stock</h1><p class="intro">Registra entradas, salidas y mermas; cada movimiento queda en el histórico.</p></div></section>
+    <section class="content-panel movement-form-panel"><div class="section-heading"><div><p class="eyebrow">ACTUALIZAR EXISTENCIAS</p><h2>Registrar movimiento</h2></div></div>
+        <form id="movimiento-form" class="form-grid" novalidate>
+            <div class="field"><label for="movimiento-producto">Producto</label><select id="movimiento-producto" name="productoId" required><option value="">Selecciona un producto</option></select><span class="field-error" data-error-for="productoId"></span></div>
+            <div class="field"><label for="movimiento-tipo">Tipo</label><select id="movimiento-tipo" name="tipo" required><option value="ENTRADA">Entrada</option><option value="SALIDA">Salida</option><option value="MERMA">Merma</option></select><span class="field-error" data-error-for="tipo"></span></div>
+            <div class="field"><label for="movimiento-cantidad">Cantidad</label><input id="movimiento-cantidad" name="cantidad" type="number" min="0.01" step="0.01" required inputmode="decimal"><span class="field-error" data-error-for="cantidad"></span></div>
+            <div class="field"><label for="movimiento-nota">Nota (opcional)</label><input id="movimiento-nota" name="nota" maxlength="255" autocomplete="off"><span class="field-error" data-error-for="nota"></span></div>
+            <div class="form-submit"><button id="guardar-movimiento" class="button button-primary" type="submit">Guardar movimiento</button></div>
+        </form>
+    </section>
+    <section class="content-panel"><div class="section-heading"><div><p class="eyebrow">REGISTRO</p><h2>Histórico de movimientos</h2></div></div>
+        <form id="filtro-movimientos" class="filter-bar"><div class="field field-compact"><label for="filtro-producto">Filtrar por producto</label><select id="filtro-producto" name="productoId"><option value="">Todos los productos</option></select></div><button class="button button-secondary" type="submit">Filtrar</button></form>
+        <p id="movimientos-status" class="status-message" role="status" aria-live="polite"></p><p id="movimientos-vacios" class="empty-state" hidden>No hay movimientos registrados todavía.</p>
+        <div class="table-scroll"><table><caption class="visually-hidden">Histórico inmutable de movimientos de inventario</caption><thead><tr><th scope="col">Fecha</th><th scope="col">Producto</th><th scope="col">Tipo</th><th scope="col">Cantidad</th><th scope="col">Nota</th></tr></thead><tbody id="movimientos-body"></tbody></table></div>
+    </section>
+</main>
+<div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

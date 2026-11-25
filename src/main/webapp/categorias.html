@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f7f4">
+    <title>Categorías | Inventario de restaurante</title><link rel="stylesheet" href="css/styles.css"><script type="module" src="js/categorias.js"></script>
+</head>
+<body>
+<header class="site-header"><a class="brand" href="index.html">Mesa<span>Stock</span></a><nav aria-label="Navegación principal"><a href="index.html">Panel</a><a href="productos.html">Productos</a><a href="categorias.html" aria-current="page">Categorías</a><a href="proveedores.html">Proveedores</a><a href="movimientos.html">Movimientos</a></nav></header>
+<main class="page-shell">
+    <section class="page-heading"><div><p class="eyebrow">ORGANIZACIÓN</p><h1>Categorías</h1><p class="intro">Agrupa los productos para mantener el inventario ordenado.</p></div><button id="nueva-categoria" class="button button-primary" type="button">Añadir categoría</button></section>
+    <section class="content-panel"><p id="categorias-status" class="status-message" role="status" aria-live="polite"></p><p id="categorias-vacias" class="empty-state" hidden>No hay categorías todavía.</p><div class="table-scroll"><table><caption class="visually-hidden">Categorías registradas</caption><thead><tr><th scope="col">Nombre</th><th scope="col">Descripción</th><th scope="col"><span class="visually-hidden">Acciones</span></th></tr></thead><tbody id="categorias-body"></tbody></table></div></section>
+</main>
+<dialog id="categoria-dialog" class="dialog-card" aria-labelledby="categoria-dialog-title"><form id="categoria-form" novalidate><div class="dialog-heading"><div><p class="eyebrow">CLASIFICACIÓN</p><h2 id="categoria-dialog-title">Añadir categoría</h2></div><button class="icon-button" type="button" data-close-dialog="categoria-dialog" aria-label="Cerrar">×</button></div><input name="id" type="hidden"><div class="field"><label for="categoria-nombre">Nombre</label><input id="categoria-nombre" name="nombre" maxlength="60" required autocomplete="off"><span class="field-error" data-error-for="nombre"></span></div><div class="field"><label for="categoria-descripcion">Descripción</label><textarea id="categoria-descripcion" name="descripcion" maxlength="255" rows="3"></textarea><span class="field-error" data-error-for="descripcion"></span></div><div class="dialog-actions"><button class="button button-secondary" type="button" data-close-dialog="categoria-dialog">Cancelar</button><button class="button button-primary" type="submit">Guardar categoría</button></div></form></dialog>
+<dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title"><form method="dialog"><h2 id="confirm-title">Confirmar acción</h2><p data-confirm-message></p><div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancelar</button><button class="button button-danger" value="confirm">Confirmar</button></div></form></dialog>
+<div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
